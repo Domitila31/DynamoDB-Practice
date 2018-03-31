@@ -1,4 +1,4 @@
-package com.paulina.dynamopractice.repository;
+package com.paulina.dynamopractice.dynamoRepository;
 
 import com.paulina.dynamopractice.model.MovieRating;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;

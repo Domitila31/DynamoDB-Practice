@@ -1,53 +1,46 @@
 package com.paulina.dynamopractice.service;
 
-import com.paulina.dynamopractice.model.MovieRating;
-import com.paulina.dynamopractice.repository.MovieRatingsRepository;
+import com.paulina.dynamopractice.model.Movie;
+import com.paulina.dynamopractice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class MovieServiceImpl implements MovieService {
-
-    private final MovieRatingsRepository movieRatingsRepository;
+    
+    private final MovieRepository movieRepository;
 
     @Autowired
-    public MovieServiceImpl(MovieRatingsRepository movieRatingsRepository){
-        this.movieRatingsRepository = movieRatingsRepository;
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
     }
 
     @Override
-    public Optional<MovieRating> getRating(String id){
-        return movieRatingsRepository.findById(id);
+    public Optional<Movie> getMovie(Integer id) {
+        return movieRepository.findById(id);
     }
 
     @Override
-    public MovieRating save(MovieRating movieRating) {
-        return movieRatingsRepository.save(movieRating);
+    public Movie save(Movie movie) {
+        return movieRepository.save(movie);
     }
 
     @Override
-    public Optional<MovieRating> updateRating(String id, MovieRating movieRating) {
-        Optional<MovieRating> ratingFound = movieRatingsRepository.findById(id);
-        if(ratingFound.isPresent())
+    public Optional<Movie> updateMovie(Integer id, Movie movie) {
+        Optional<Movie> movieFound = movieRepository.findById(id);
+        if(movieFound.isPresent())
         {
-            movieRating.setId(id);
-            MovieRating updatedRating = movieRatingsRepository.save(movieRating);
+            movie.setId(id);
+            Movie updatedRating = movieRepository.save(movie);
             return Optional.of(updatedRating);
         }
         return Optional.empty();
     }
 
     @Override
-    public void delete(String id){
-        movieRatingsRepository.deleteById(id);
-    }
-
-    @Override
-    public List<MovieRating> findByReviewer(String name) {
-        return movieRatingsRepository.findByReviewer(name);
+    public void delete(Integer id) {
+        movieRepository.deleteById(id);
     }
 }

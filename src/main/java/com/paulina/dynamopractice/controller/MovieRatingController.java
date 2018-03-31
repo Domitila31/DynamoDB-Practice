@@ -1,7 +1,7 @@
 package com.paulina.dynamopractice.controller;
 
 import com.paulina.dynamopractice.model.MovieRating;
-import com.paulina.dynamopractice.service.MovieService;
+import com.paulina.dynamopractice.service.MovieRatingsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class MovieRatingController {
 
     @Autowired
-    private MovieService movieService;
+    private MovieRatingsService movieRatingsService;
 
     @PostMapping()
     public ResponseEntity<?> post(@RequestBody MovieRating movieRating)
@@ -26,7 +26,7 @@ public class MovieRatingController {
              return new ResponseEntity<>("Title is mandatory.", HttpStatus.BAD_REQUEST);
         }
 
-        MovieRating movieRatingCreated = movieService.save(movieRating);
+        MovieRating movieRatingCreated = movieRatingsService.save(movieRating);
         return new ResponseEntity<>(movieRatingCreated, HttpStatus.CREATED);
     }
 
@@ -38,7 +38,7 @@ public class MovieRatingController {
             return new ResponseEntity<>("ID is mandatory.", HttpStatus.BAD_REQUEST);
         }
 
-        Optional<MovieRating> movieRatingsCreated = movieService.getRating(id);
+        Optional<MovieRating> movieRatingsCreated = movieRatingsService.getRating(id);
         if(movieRatingsCreated.isPresent())
         {
             return new ResponseEntity<>(movieRatingsCreated, HttpStatus.CREATED);
@@ -55,7 +55,7 @@ public class MovieRatingController {
         {
             return new ResponseEntity<>("Incorrect ID.", HttpStatus.BAD_REQUEST);
         }
-        Optional<MovieRating> updatedRating = movieService.updateRating(id, rating);
+        Optional<MovieRating> updatedRating = movieRatingsService.updateRating(id, rating);
         if(updatedRating.isPresent()) {
             return new ResponseEntity<>(updatedRating.get(), HttpStatus.CREATED);
         }
@@ -66,12 +66,12 @@ public class MovieRatingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        movieService.delete(id);
+        movieRatingsService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{name}/reviewer")
     public List<MovieRating> findByReviewer(@PathVariable String name) {
-        return movieService.findByReviewer(name);
+        return movieRatingsService.findByReviewer(name);
     }
 }

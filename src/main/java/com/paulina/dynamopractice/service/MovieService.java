@@ -1,18 +1,15 @@
 package com.paulina.dynamopractice.service;
 
-import com.paulina.dynamopractice.model.MovieRating;
+import com.paulina.dynamopractice.model.Movie;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface MovieService {
-    Optional<MovieRating> getRating(String id);
+    Optional<Movie> getMovie(Integer id);
 
-    MovieRating save(MovieRating movieRating);
+    Movie save(Movie movie);
 
-    Optional<MovieRating> updateRating(String id, MovieRating movieRating);
+    Optional<Movie> updateMovie(Integer id, Movie movie);
 
-    void delete(String id);
-
-    List<MovieRating> findByReviewer(String name);
+    void delete(Integer id);
 }
